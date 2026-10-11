@@ -23,3 +23,10 @@ The original algorithm uses the digit `0` to represent the "th" sound. This libr
 `Z` is coded as `S`, matching the original paper's sibilant merger. `CH` at the start of a word followed by a vowel is treated as French (`chef`); medial `CH` is treated as Germanic (`chemistry`).
 
 The library only handles English. Pass it a German or French word and you will get an English speaker's mispronunciation of it, which is usually what you want for search and usually wrong for anything else.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
